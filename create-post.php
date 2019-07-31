@@ -1,44 +1,18 @@
+<?php
+    include "db.php";
 
-<!doctype html>
-<html lang="en">
-<head>
+    if(!empty($_POST['author']) && !empty($_POST['title']) && !empty($_POST['body'])) {
+        $date = date('Y-m-d H:i:s');
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+        $sql = "INSERT INTO posts (author, title, body, created_at) VALUES ('{$_POST['author']}', '{$_POST['title']}', '{$_POST['body']}','$date');";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+    
+        header("Location: index.php");
+    } else {
+        header("Location: create.php?&error=1");
+    }
+?>
 
-    <title>Vivify Blog</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="styles/blog.css" rel="stylesheet">
-</head>
-
-<body>
-
-<?php include "header.php" ?>
-
-<main role="main" class="container">
-
-    <div class="row">
-
-        <div class="col-sm-8 blog-main">
-
-            Create Post
-
-        </div><!-- /.blog-main -->
-
-        <?php include "sidebar.php" ?>
-
-    </div><!-- /.row -->
-
-</main><!-- /.container -->
-
-<?php include "footer.php" ?>
-
-</body>
-</html>
+            
