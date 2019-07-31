@@ -53,20 +53,47 @@
                     <p class="blog-post-meta"><?php echo($post['created_at']) ?> by <?php echo($post['author']) ?></p>
                     <?php echo($post['body']) ?>
                 </div><!-- /.blog-post -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <button id="comments_btn" onclick="showHideComments()" class="btn btn-default">Hide comments</button>
+                    </div>
+                </div>
+
+                <script>
+                    var comments_btn = document.getElementById('comments_btn');
+
+                    function showHideComments(){
+                        var comments = document.getElementById('comments');
+                        if(comments.className == 'd-none'){
+                            comments.classList.remove('d-none');
+                            comments_btn.innerHTML = "Hide Comments"
+                        }else{
+                            comments.className = 'd-none';
+                            comments_btn.innerHTML = "Show Comments";
+                        }
+                    }
+
+                </script>
                 
                 <?php
                     if(!empty($comments)){
-                        foreach ($comments as $comment) {
+                ?>
+                        <ul id="comments">
+                <?php
+                            foreach ($comments as $comment) {
                 ?> 
-                            <ul>
                                 <li>
                                 <div>Author: <?php echo $comment['author'] ?></div>
                                 <div>Comment: <?php echo $comment['text'] ?> </div>
                                 </li>
                                 <hr>
-                            </ul>
+                            
                 <?php 
-                        }
+                            }
+                ?>
+                        </ul>
+                <?php
                     } 
                 ?>
             <?php 
