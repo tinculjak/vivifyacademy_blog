@@ -54,6 +54,20 @@
                     <?php echo($post['body']) ?>
                 </div><!-- /.blog-post -->
 
+                <?php if (!empty($_GET['error'])) {?>
+                    <div class="alert alert-danger">
+                        Please fill in all the fields
+                    </div>
+                <?php } ?>
+
+                <form class="form" method="POST" action="create-comment.php" >
+                    <input type="hidden" name="post_id" value="<?php echo $_GET['post_id']; ?>"/>
+                    <input name="author" type="text" placeholder="Author" class="form-control"/>
+                    <textarea name="comment" rows="7" cols="45" placeholder="Comment" class="form-control"></textarea>
+                    <input class="btn btn-default" type="submit" value="Add Comment">
+                </form>
+                <hr>
+
                 <div class="row">
                     <div class="col-12">
                         <button id="comments_btn" onclick="showHideComments()" class="btn btn-default">Hide comments</button>
@@ -84,8 +98,15 @@
                             foreach ($comments as $comment) {
                 ?> 
                                 <li>
-                                <div>Author: <?php echo $comment['author'] ?></div>
-                                <div>Comment: <?php echo $comment['text'] ?> </div>
+                                    <div>Author: <?php echo $comment['author'] ?></div>
+                                    <div>Comment: <?php echo $comment['text'] ?> </div>
+                                    <div>
+                                        <form method="POST" action="delete-comment.php" >
+                                            <input class="btn btn-default" type="submit" value="Delete">
+                                            <input type="hidden" name="id" value="<?php echo $comment['id']; ?>"/>
+                                            <input type="hidden" name="post_id" value="<?php echo $comment['post_id']; ?>"/>
+                                        </form>
+                                    </div>
                                 </li>
                                 <hr>
                             
