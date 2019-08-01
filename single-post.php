@@ -41,6 +41,12 @@
                     $statement->setFetchMode(PDO::FETCH_ASSOC);
                     $post = $statement->fetch(); 
 
+                    $sql = "SELECT * FROM users WHERE users.id = {$post['user_id']}";
+                    $statement = $connection->prepare($sql);
+                    $statement->execute();
+                    $statement->setFetchMode(PDO::FETCH_ASSOC);
+                    $author = $statement->fetch();
+
                     $sql = "SELECT * FROM comments WHERE comments.post_id = {$_GET['post_id']}";
                     $statement = $connection->prepare($sql);
                     $statement->execute();
@@ -51,7 +57,7 @@
 
                 <div class="blog-post">
                     <h2 class="blog-post-title"><?php echo($post['title']) ?></h2>
-                    <p class="blog-post-meta"><?php echo($post['created_at']) ?> by <?php echo($post['author']) ?></p>
+                    <p class="blog-post-meta"><?php echo($post['created_at']) ?> by <?php echo("{$author['first_name']} {$author['last_name']}") ?></p>
                     <?php echo($post['body']) ?>
 
                     <form id="delete-post-form" method="POST" action="delete-post.php">
