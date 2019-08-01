@@ -53,7 +53,22 @@
                     <h2 class="blog-post-title"><?php echo($post['title']) ?></h2>
                     <p class="blog-post-meta"><?php echo($post['created_at']) ?> by <?php echo($post['author']) ?></p>
                     <?php echo($post['body']) ?>
+
+                    <form id="delete-post-form" method="POST" action="delete-post.php">
+                        <input  id="delete-post" type="submit" value="Delete this post" class="btn btn-primary" >
+                        <input type="hidden" name="id" value="<?php echo $post['id']; ?>" />
+                    </form>
                 </div><!-- /.blog-post -->
+
+                <script>
+                    document.getElementById('delete-post').addEventListener("click", function(event){
+                        event.preventDefault();
+                        if(window.confirm("Do you really want to delete this post?")) {
+                            var form = document.getElementById('delete-post-form');
+                            form.submit();
+                        }
+                    });
+                </script>
 
                 <?php if (!empty($_GET['error'])) {?>
                     <div class="alert alert-danger">
